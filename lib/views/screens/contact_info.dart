@@ -11,6 +11,7 @@ class contact_info extends StatefulWidget {
 }
 
 class _contact_infoState extends State<contact_info> {
+  int index = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,12 +21,79 @@ class _contact_infoState extends State<contact_info> {
           "Contact info",
           style: appBarTitleStyle,
         ),
-        toolbarHeight: 130,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30),bottomRight: Radius.circular(30),),
-        ),
+        // shape: RoundedRectangleBorder(
+        //   borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30),bottomRight: Radius.circular(30),),
+        // ),
         centerTitle: true,
         backgroundColor: Color(0xff13547A),
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: Row(
+              children: [
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        index = 0;
+                      });
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      child: const Text(
+                        "Contact",
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
+                        ),
+                      ),
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                              width: index == 0 ? 4 : 0,
+                              color: Colors.amberAccent),
+                        ),
+                        color: Color(0xff13547A),
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        index = 1;
+                      });
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      child: const Text(
+                        "Photo",
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
+                        ),
+                      ),
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                              width: index == 1 ? 3 : 0,
+                              color: Colors.amberAccent),
+                        ),
+                        color: Color(0xff13547A),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            flex: 11,
+            child: Container(),
+          ),
+        ],
       ),
     );
   }
