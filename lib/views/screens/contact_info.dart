@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:resume_builder_app/utils/icon_utils.dart';
 
 import '../../utils/theme_utils.dart';
 import '../components/Mybackicon.dart';
@@ -12,8 +14,13 @@ class contact_info extends StatefulWidget {
 
 class _contact_infoState extends State<contact_info> {
   int index = 0;
+
+  GlobalKey<FormState> formkey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
+    double iconSize = size.height * 0.05;
     return Scaffold(
       appBar: AppBar(
         leading: Mybackicon(),
@@ -21,9 +28,6 @@ class _contact_infoState extends State<contact_info> {
           "Contact info",
           style: appBarTitleStyle,
         ),
-        // shape: RoundedRectangleBorder(
-        //   borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30),bottomRight: Radius.circular(30),),
-        // ),
         centerTitle: true,
         backgroundColor: Color(0xff13547A),
       ),
@@ -91,10 +95,153 @@ class _contact_infoState extends State<contact_info> {
           ),
           Expanded(
             flex: 11,
-            child: Container(),
+            child: Padding(
+              padding: const EdgeInsets.all(18),
+              child: IndexedStack(
+                index: index,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(18),
+                    color: Colors.white,
+                    child: Form(
+                      key: formkey,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Image.asset(
+                                    iconPath + "user.png",
+                                    height: iconSize,
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
+                                Expanded(
+                                  flex: 8,
+                                  child: TextFormField(
+                                    textInputAction: TextInputAction.next,
+                                    decoration: InputDecoration(
+                                      hintText: "Enter the name",
+                                      labelText: "Name",
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Image.asset(
+                                    iconPath + "email.png",
+                                    height: iconSize,
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
+                                Expanded(
+                                  flex: 8,
+                                  child: TextFormField(
+                                    textInputAction: TextInputAction.next,
+                                    keyboardType: TextInputType.emailAddress,
+                                    decoration: InputDecoration(
+                                      hintText: "Enter the email",
+                                      labelText: "Email",
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Image.asset(
+                                    iconPath + "phone.png",
+                                    height: iconSize,
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
+                                Expanded(
+                                  flex: 8,
+                                  child: TextFormField(
+                                    maxLength: 10,
+                                    textInputAction: TextInputAction.next,
+                                    keyboardType: TextInputType.phone,
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.digitsOnly,
+                                    ],
+                                    decoration: InputDecoration(
+                                      hintText: "Enter the phone number",
+                                      labelText: "Phone",
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Image.asset(
+                                    iconPath + "add.png",
+                                    height: iconSize,
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
+                                Expanded(
+                                  flex: 8,
+                                  child: TextFormField(
+                                    decoration: InputDecoration(
+                                      hintText: "Address",
+                                      labelText: "Address (Street,Building No)",
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                const Spacer(),
+                                const SizedBox(width: 10),
+                                Expanded(
+                                  flex: 8,
+                                  child: TextFormField(
+                                    decoration: InputDecoration(
+                                      hintText: "Address",
+                                      labelText: "Address Line 2",
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                const Spacer(),
+                                const SizedBox(width: 10),
+                                Expanded(
+                                  flex: 8,
+                                  child: TextFormField(
+                                    decoration: InputDecoration(
+                                      hintText: "Address",
+                                      labelText: "Address Line 3",
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Text("photo"),
+                ],
+              ),
+            ),
           ),
         ],
       ),
+      backgroundColor: Colors.grey.shade200,
     );
   }
 }
