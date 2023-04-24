@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:resume_builder_app/modals/globalVar.dart';
 import 'package:resume_builder_app/utils/icon_utils.dart';
 
 import '../../utils/theme_utils.dart';
@@ -14,7 +16,7 @@ class contact_info extends StatefulWidget {
 
 class _contact_infoState extends State<contact_info> {
   int index = 0;
-
+  ImagePicker picker = ImagePicker();
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -123,6 +125,17 @@ class _contact_infoState extends State<contact_info> {
                                   flex: 8,
                                   child: TextFormField(
                                     textInputAction: TextInputAction.next,
+                                    initialValue: global.name,
+                                    validator: (val) {
+                                      if (val!.isEmpty) {
+                                        return "Please Enter name!!";
+                                      } else {
+                                        return null;
+                                      }
+                                    },
+                                    onSaved: (val) {
+                                      global.name = val;
+                                    },
                                     decoration: InputDecoration(
                                       hintText: "Enter the name",
                                       labelText: "Name",
@@ -145,6 +158,17 @@ class _contact_infoState extends State<contact_info> {
                                   child: TextFormField(
                                     textInputAction: TextInputAction.next,
                                     keyboardType: TextInputType.emailAddress,
+                                    initialValue: global.email,
+                                    validator: (val) {
+                                      if (val!.isEmpty) {
+                                        return "Please Enter Valid Email Id!!";
+                                      } else {
+                                        return null;
+                                      }
+                                    },
+                                    onSaved: (val) {
+                                      global.email = val;
+                                    },
                                     decoration: InputDecoration(
                                       hintText: "Enter the email",
                                       labelText: "Email",
@@ -171,8 +195,25 @@ class _contact_infoState extends State<contact_info> {
                                     inputFormatters: [
                                       FilteringTextInputFormatter.digitsOnly,
                                     ],
+                                    initialValue: (global.contactNo == null)
+                                        ? null
+                                        : global.contactNo.toString(),
+                                    validator: (val) {
+                                      if (val!.isEmpty) {
+                                        return "Please Enter Mobile Number!!";
+                                      } else if (val!.length < 10) {
+                                        return "Contact number must have 10 digits!!";
+                                      } else {
+                                        return null;
+                                      }
+                                    },
+                                    onSaved: (val) {
+                                      global.contactNo = int.parse(val!);
+                                    },
+                                    textAlign: TextAlign.start,
                                     decoration: InputDecoration(
                                       hintText: "Enter the phone number",
+                                      prefixText: "+91 ",
                                       labelText: "Phone",
                                     ),
                                   ),
@@ -191,6 +232,19 @@ class _contact_infoState extends State<contact_info> {
                                 Expanded(
                                   flex: 8,
                                   child: TextFormField(
+                                    keyboardType: TextInputType.text,
+                                    textInputAction: TextInputAction.next,
+                                    initialValue: global.a1,
+                                    validator: (val) {
+                                      if (val!.isEmpty) {
+                                        return "Please Enter Address!!";
+                                      } else {
+                                        return null;
+                                      }
+                                    },
+                                    onSaved: (val) {
+                                      global.a1 = val;
+                                    },
                                     decoration: InputDecoration(
                                       hintText: "Address",
                                       labelText: "Address (Street,Building No)",
@@ -206,6 +260,12 @@ class _contact_infoState extends State<contact_info> {
                                 Expanded(
                                   flex: 8,
                                   child: TextFormField(
+                                    keyboardType: TextInputType.text,
+                                    textInputAction: TextInputAction.next,
+                                    initialValue: global.a2,
+                                    onSaved: (val) {
+                                      global.a2 = val;
+                                    },
                                     decoration: InputDecoration(
                                       hintText: "Address",
                                       labelText: "Address Line 2",
@@ -221,6 +281,12 @@ class _contact_infoState extends State<contact_info> {
                                 Expanded(
                                   flex: 8,
                                   child: TextFormField(
+                                    keyboardType: TextInputType.text,
+                                    textInputAction: TextInputAction.next,
+                                    initialValue: global.a2,
+                                    onSaved: (val) {
+                                      global.a2 = val;
+                                    },
                                     decoration: InputDecoration(
                                       hintText: "Address",
                                       labelText: "Address Line 3",

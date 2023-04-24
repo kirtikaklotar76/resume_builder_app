@@ -1,8 +1,8 @@
 class global {
-  String? name;
-  String? email;
-  int? contactNo;
-  String? a1;
-  String? a2;
-  String? a3;
+  static String? name;
+  static String? email;
+  static int? contactNo;
+  static String? a1;
+  static String? a2;
+  static String? a3;
 }
