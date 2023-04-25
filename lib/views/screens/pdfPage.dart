@@ -26,45 +26,71 @@ class _pdf_pageState extends State<pdf_page> {
           height: double.infinity,
           width: double.infinity,
           alignment: pw.Alignment.center,
-          child: pw.Column(
-            mainAxisSize: pw.MainAxisSize.min,
+          child: pw.Row(
             children: [
-              pw.Container(
-                height: 250,
-                width: 250,
-                decoration: pw.BoxDecoration(
-                  shape: pw.BoxShape.circle,
-                  image: pw.DecorationImage(
-                    image: pw.MemoryImage(
-                      File(global.image!.path).readAsBytesSync(),
+              pw.Expanded(
+                flex: 1,
+                child: pw.Container(
+                  color: PdfColor.fromInt(0xff13547A),
+                  child: pw.Padding(
+                    padding: pw.EdgeInsets.all(10),
+                    child: pw.Column(
+                      mainAxisAlignment: pw.MainAxisAlignment.start,
+                      children: [
+                        pw.SizedBox(
+                          height: 15,
+                        ),
+                        pw.Container(
+                          height: 125,
+                          width: 125,
+                          decoration: pw.BoxDecoration(
+                            shape: pw.BoxShape.circle,
+                            image: pw.DecorationImage(
+                              image: pw.MemoryImage(
+                                File(global.image!.path).readAsBytesSync(),
+                              ),
+                            ),
+                          ),
+                        ),
+                        pw.SizedBox(
+                          height: 25,
+                        ),
+                        pw.Row(
+                          children: [
+                            pw.SizedBox(
+                              height: 10,
+                            ),
+                            pw.Expanded(
+                              child: pw.Text(
+                                "Name:",
+                                style: pw.TextStyle(
+                                  fontSize: 18,
+                                  color: PdfColors.white,
+                                  fontWeight: pw.FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            pw.Expanded(
+                              flex: 2,
+                              child: pw.Text(
+                                global.name!,
+                                style: pw.TextStyle(
+                                  fontSize: 16,
+                                  color: PdfColors.white,
+                                  fontWeight: pw.FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
                 ),
               ),
-              pw.SizedBox(
-                height: 20,
-              ),
-              pw.SizedBox(
-                width: 300,
-                child: pw.Row(
-                  mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                  children: [
-                    pw.Text(
-                      "Name :",
-                      style: pw.TextStyle(
-                        fontSize: 28,
-                        color: PdfColors.red,
-                      ),
-                    ),
-                    pw.Text(
-                      global.name!,
-                      style: pw.TextStyle(
-                        fontSize: 28,
-                        color: PdfColors.red,
-                      ),
-                    ),
-                  ],
-                ),
+              pw.Expanded(
+                flex: 2,
+                child: pw.Container(),
               ),
             ],
           ),

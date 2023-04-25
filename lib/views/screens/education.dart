@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import '../../utils/theme_utils.dart';
 import '../components/Mybackicon.dart';
 
-class experience extends StatefulWidget {
-  const experience({Key? key}) : super(key: key);
+class education extends StatefulWidget {
+  const education({Key? key}) : super(key: key);
 
   @override
-  State<experience> createState() => _experienceState();
+  State<education> createState() => _educationState();
 }
 
-class _experienceState extends State<experience> {
+class _educationState extends State<education> {
   @override
   Widget build(BuildContext context) {
     Size s = MediaQuery.of(context).size;
@@ -18,7 +18,7 @@ class _experienceState extends State<experience> {
       appBar: AppBar(
         leading: Mybackicon(),
         title: Text(
-          "Experience",
+          "Education",
           style: appBarTitleStyle,
         ),
         toolbarHeight: 130,
