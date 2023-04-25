@@ -106,7 +106,9 @@ class _contact_infoState extends State<contact_info> {
                 children: [
                   Container(
                     padding: const EdgeInsets.all(18),
-                    color: Colors.white,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: Colors.white),
                     child: Form(
                       key: formkey,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -339,7 +341,9 @@ class _contact_infoState extends State<contact_info> {
                   ),
                   Container(
                     height: 250,
-                    color: Colors.white,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: Colors.white),
                     alignment: Alignment.center,
                     child: Stack(
                       alignment: Alignment.bottomRight,

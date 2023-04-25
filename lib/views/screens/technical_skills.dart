@@ -39,7 +39,8 @@ class _technicalskillsState extends State<technicalskills> {
         child: Container(
           width: double.infinity,
           padding: EdgeInsets.all(20),
-          color: Colors.white,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15), color: Colors.white),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
