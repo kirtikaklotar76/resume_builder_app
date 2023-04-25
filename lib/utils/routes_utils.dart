@@ -15,6 +15,7 @@ class BuildOption {
 class MyRoutes {
   static String home = '/';
   static String workspace = 'resume_workspace';
+  static String pdfPage = 'pdf_page';
   static List<BuildOption> buildOptions = [
     BuildOption(
       icon: iconPath + "contact-books.png",

@@ -28,6 +28,17 @@ class _resume_workspaceState extends State<resume_workspace> {
           "Resume Workspace",
           style: appBarTitleStyle,
         ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed(MyRoutes.pdfPage);
+            },
+            icon: const Icon(
+              Icons.picture_as_pdf,
+              color: Colors.white,
+            ),
+          ),
+        ],
         centerTitle: true,
         backgroundColor: Color(0xff13547A),
       ),

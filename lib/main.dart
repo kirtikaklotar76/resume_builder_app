@@ -3,6 +3,7 @@ import 'package:resume_builder_app/utils/routes_utils.dart';
 import 'package:resume_builder_app/views/screens/contact_info.dart';
 import 'package:resume_builder_app/views/screens/experience.dart';
 import 'package:resume_builder_app/views/screens/home_page.dart';
+import 'package:resume_builder_app/views/screens/pdfPage.dart';
 import 'package:resume_builder_app/views/screens/personal_details.dart';
 import 'package:resume_builder_app/views/screens/resume_workspace.dart';
 import 'package:resume_builder_app/views/screens/technical_skills.dart';
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
       routes: {
         MyRoutes.home: (context) => const HomePage(),
         MyRoutes.workspace: (context) => const resume_workspace(),
+        MyRoutes.pdfPage: (context) => const pdf_page(),
         MyRoutes.buildOptions[0].route: (context) => const contact_info(),
         MyRoutes.buildOptions[2].route: (context) => const personal_details(),
         MyRoutes.buildOptions[4].route: (context) => const experience(),

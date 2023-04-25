@@ -1,3 +1,5 @@
+import 'dart:io';
+
 class global {
   static String? name;
   static String? email;
@@ -5,4 +7,6 @@ class global {
   static String? a1;
   static String? a2;
   static String? a3;
+
+  static File? image;
 }

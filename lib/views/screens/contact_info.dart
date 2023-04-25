@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -6,6 +7,7 @@ import 'package:resume_builder_app/utils/icon_utils.dart';
 
 import '../../utils/theme_utils.dart';
 import '../components/Mybackicon.dart';
+import '../components/my_snackbar.dart';
 
 class contact_info extends StatefulWidget {
   const contact_info({Key? key}) : super(key: key);
@@ -263,6 +265,13 @@ class _contact_infoState extends State<contact_info> {
                                     keyboardType: TextInputType.text,
                                     textInputAction: TextInputAction.next,
                                     initialValue: global.a2,
+                                    validator: (val) {
+                                      if (val!.isEmpty) {
+                                        return "Please Enter Address!!";
+                                      } else {
+                                        return null;
+                                      }
+                                    },
                                     onSaved: (val) {
                                       global.a2 = val;
                                     },
@@ -283,9 +292,37 @@ class _contact_infoState extends State<contact_info> {
                                   child: TextFormField(
                                     keyboardType: TextInputType.text,
                                     textInputAction: TextInputAction.next,
-                                    initialValue: global.a2,
+                                    initialValue: global.a3,
+                                    validator: (val) {
+                                      if (val!.isEmpty) {
+                                        return "Please Enter Address!!";
+                                      } else {
+                                        return null;
+                                      }
+                                    },
                                     onSaved: (val) {
-                                      global.a2 = val;
+                                      global.a3 = val;
+                                    },
+                                    onFieldSubmitted: (val) {
+                                      if (formkey.currentState!.validate()) {
+                                        formkey.currentState!.save();
+
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          mySnackBar(
+                                            text: "Successfully validated !!",
+                                            color: Colors.green,
+                                          ),
+                                        );
+                                      } else {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          mySnackBar(
+                                            text: "Failled to validate !!",
+                                            color: Colors.red,
+                                          ),
+                                        );
+                                      }
                                     },
                                     decoration: InputDecoration(
                                       hintText: "Address",
@@ -300,7 +337,72 @@ class _contact_infoState extends State<contact_info> {
                       ),
                     ),
                   ),
-                  Text("photo"),
+                  Container(
+                    height: 250,
+                    color: Colors.white,
+                    alignment: Alignment.center,
+                    child: Stack(
+                      alignment: Alignment.bottomRight,
+                      children: [
+                        CircleAvatar(
+                          radius: 80,
+                          foregroundImage: (global.image != null)
+                              ? FileImage(global.image!)
+                              : null,
+                          child: const Text("ADD"),
+                        ),
+                        FloatingActionButton(
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: const Text("Select the method !!"),
+                                actions: [
+                                  TextButton.icon(
+                                    onPressed: () async {
+                                      Navigator.of(context).pop();
+
+                                      XFile? img = await picker.pickImage(
+                                          source: ImageSource.camera);
+
+                                      if (img != null) {
+                                        setState(() {
+                                          global.image = File(img.path);
+                                        });
+                                      }
+                                    },
+                                    label: const Text("Camera"),
+                                    icon: const Icon(Icons.camera_alt),
+                                  ),
+                                  TextButton.icon(
+                                    onPressed: () async {
+                                      XFile? img = await picker.pickImage(
+                                          source: ImageSource.gallery);
+
+                                      if (img != null) {
+                                        setState(() {
+                                          global.image = File(img.path);
+                                        });
+                                      }
+
+                                      Navigator.of(context).pop();
+                                    },
+                                    label: const Text("Gallery"),
+                                    icon: const Icon(Icons.image),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                          mini: true,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          child: const Icon(Icons.add),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
