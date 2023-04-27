@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:resume_builder_app/modals/globalVar.dart';
 
 import '../../utils/theme_utils.dart';
 import '../components/Mybackicon.dart';
+import '../components/my_snackbar.dart';
 
 class personal_details extends StatefulWidget {
   const personal_details({Key? key}) : super(key: key);
@@ -11,13 +13,7 @@ class personal_details extends StatefulWidget {
 }
 
 class _personal_detailsState extends State<personal_details> {
-  String? maritalStatus;
-  String? languagesKnown;
-
-  bool isChecked1 = false;
-  bool isChecked2 = false;
-  bool isChecked3 = false;
-
+  GlobalKey<FormState> formkey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     Size s = MediaQuery.of(context).size;
@@ -43,181 +39,252 @@ class _personal_detailsState extends State<personal_details> {
         child: Container(
           width: s.width,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15), color: Colors.white),
+            borderRadius: BorderRadius.circular(15),
+            color: Colors.white,
+          ),
           padding: EdgeInsets.all(40),
           child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  "DOB",
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromRGBO(19, 84, 122, 0.7),
-                  ),
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(5),
-                      ),
-                    ),
-                    hintText: 'DD/MM/YYYY',
-                    hintStyle: TextStyle(color: Colors.grey),
-                  ),
-                ),
-                const SizedBox(
-                  height: 12,
-                ),
-                Text(
-                  "Marital Status",
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromRGBO(19, 84, 122, 0.7),
-                  ),
-                ),
-                Container(
-                  height: s.height * 0.03,
-                  child: RadioListTile(
-                    contentPadding: EdgeInsets.zero,
-                    value: "Single",
-                    title: Text(
-                      "Single",
-                      style: TextStyle(
-                        color: maritalStatus == "Single"
-                            ? Color.fromRGBO(19, 84, 122, 0.7)
-                            : Colors.grey,
-                      ),
-                    ),
-                    groupValue: maritalStatus,
-                    onChanged: (val) {
-                      setState(() {
-                        maritalStatus = val;
-                      });
-                    },
-                  ),
-                ),
-                Container(
-                  height: s.height * 0.03,
-                  child: RadioListTile(
-                    contentPadding: EdgeInsets.zero,
-                    value: "Married",
-                    title: Text(
-                      "Married",
-                      style: TextStyle(
-                        color: maritalStatus == "Married"
-                            ? Color.fromRGBO(19, 84, 122, 0.7)
-                            : Colors.grey,
-                      ),
-                    ),
-                    groupValue: maritalStatus,
-                    onChanged: (val) {
-                      setState(() {
-                        maritalStatus = val;
-                      });
-                    },
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  "Languages Known",
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromRGBO(19, 84, 122, 0.7),
-                  ),
-                ),
-                Container(
-                  height: s.height * 0.035,
-                  child: CheckboxListTile(
-                      value: isChecked1,
-                      contentPadding: EdgeInsets.zero,
-                      controlAffinity: ListTileControlAffinity.leading,
-                      title: const Text("English"),
-                      onChanged: (val) {
-                        setState(() {
-                          isChecked1 = val!;
-                        });
-                      }),
-                ),
-                Container(
-                  height: s.height * 0.035,
-                  child: CheckboxListTile(
-                      value: isChecked2,
-                      contentPadding: EdgeInsets.zero,
-                      controlAffinity: ListTileControlAffinity.leading,
-                      title: const Text("Hindi"),
-                      onChanged: (val) {
-                        setState(() {
-                          isChecked2 = val!;
-                        });
-                      }),
-                ),
-                Container(
-                  height: s.height * 0.03,
-                  child: CheckboxListTile(
-                      value: isChecked3,
-                      contentPadding: EdgeInsets.zero,
-                      controlAffinity: ListTileControlAffinity.leading,
-                      title: const Text("Gujarati"),
-                      onChanged: (val) {
-                        setState(() {
-                          isChecked3 = val!;
-                        });
-                      }),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  "Nationality",
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromRGBO(19, 84, 122, 0.7),
-                  ),
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(5),
-                      ),
-                    ),
-                    hintText: 'Indian',
-                    hintStyle: TextStyle(color: Colors.grey),
-                  ),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                GestureDetector(
-                  child: Center(
-                    child: Container(
-                      alignment: Alignment.center,
-                      height: s.height * 0.04,
-                      width: s.width * 0.25,
+            child: Form(
+              key: formkey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    "DOB",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
                       color: Color.fromRGBO(19, 84, 122, 0.7),
-                      child: Text(
-                        "SAVE",
-                        style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  TextFormField(
+                    textInputAction: TextInputAction.next,
+                    keyboardType: TextInputType.text,
+                    initialValue: global.dob,
+                    validator: (val) {
+                      if (val!.isEmpty) {
+                        return "Please Enter The DOB!!";
+                      } else {
+                        return null;
+                      }
+                    },
+                    onSaved: (val) {
+                      global.dob = val;
+                    },
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(5),
+                        ),
+                      ),
+                      hintText: 'DD/MM/YYYY',
+                      hintStyle: TextStyle(color: Colors.grey),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  Text(
+                    "Marital Status",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromRGBO(19, 84, 122, 0.7),
+                    ),
+                  ),
+                  Container(
+                    height: s.height * 0.03,
+                    child: RadioListTile(
+                      contentPadding: EdgeInsets.zero,
+                      value: "Single",
+                      title: Text(
+                        "Single",
+                        style: TextStyle(
+                          color: global.maritalStatus == "Single"
+                              ? Color.fromRGBO(19, 84, 122, 0.7)
+                              : Colors.grey,
+                        ),
+                      ),
+                      groupValue: global.maritalStatus,
+                      onChanged: (val) {
+                        setState(() {
+                          global.maritalStatus = val;
+                        });
+                      },
+                    ),
+                  ),
+                  Container(
+                    height: s.height * 0.03,
+                    child: RadioListTile(
+                      contentPadding: EdgeInsets.zero,
+                      value: "Married",
+                      title: Text(
+                        "Married",
+                        style: TextStyle(
+                          color: global.maritalStatus == "Married"
+                              ? Color.fromRGBO(19, 84, 122, 0.7)
+                              : Colors.grey,
+                        ),
+                      ),
+                      groupValue: global.maritalStatus,
+                      onChanged: (val) {
+                        setState(() {
+                          global.maritalStatus = val;
+                        });
+                      },
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    "Languages Known",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromRGBO(19, 84, 122, 0.7),
+                    ),
+                  ),
+                  Container(
+                    height: s.height * 0.035,
+                    child: CheckboxListTile(
+                        value: global.isChecked1,
+                        contentPadding: EdgeInsets.zero,
+                        controlAffinity: ListTileControlAffinity.leading,
+                        title: Text(
+                          "English",
+                          style: TextStyle(
+                            color: global.isChecked2
+                                ? Color.fromRGBO(19, 84, 122, 0.7)
+                                : Colors.grey,
+                          ),
+                        ),
+                        onChanged: (val) {
+                          setState(() {
+                            global.isChecked1 = val!;
+                          });
+                        }),
+                  ),
+                  Container(
+                    height: s.height * 0.035,
+                    child: CheckboxListTile(
+                        value: global.isChecked2,
+                        contentPadding: EdgeInsets.zero,
+                        controlAffinity: ListTileControlAffinity.leading,
+                        title: Text(
+                          "Hindi",
+                          style: TextStyle(
+                            color: global.isChecked2
+                                ? Color.fromRGBO(19, 84, 122, 0.7)
+                                : Colors.grey,
+                          ),
+                        ),
+                        onChanged: (val) {
+                          setState(() {
+                            global.isChecked2 = val!;
+                          });
+                        }),
+                  ),
+                  Container(
+                    height: s.height * 0.03,
+                    child: CheckboxListTile(
+                        value: global.isChecked3,
+                        contentPadding: EdgeInsets.zero,
+                        controlAffinity: ListTileControlAffinity.leading,
+                        title: Text(
+                          "Gujarati",
+                          style: TextStyle(
+                            color: global.isChecked3
+                                ? Color.fromRGBO(19, 84, 122, 0.7)
+                                : Colors.grey,
+                          ),
+                        ),
+                        onChanged: (val) {
+                          setState(() {
+                            global.isChecked3 = val!;
+                          });
+                        }),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    "Nationality",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromRGBO(19, 84, 122, 0.7),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  TextFormField(
+                    textInputAction: TextInputAction.next,
+                    keyboardType: TextInputType.text,
+                    initialValue: global.nationality,
+                    validator: (val) {
+                      if (val!.isEmpty) {
+                        return "Please Enter The Nationality!!";
+                      } else {
+                        return null;
+                      }
+                    },
+                    onSaved: (val) {
+                      global.nationality = val;
+                    },
+                    onFieldSubmitted: (val) {
+                      if (formkey.currentState!.validate()) {
+                        formkey.currentState!.save();
+
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          mySnackBar(
+                            text: "Successfully validated !!",
+                            color: Colors.green,
+                          ),
+                        );
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          mySnackBar(
+                            text: "Failed to validate !!",
+                            color: Colors.red,
+                          ),
+                        );
+                      }
+                    },
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(5),
+                        ),
+                      ),
+                      hintText: 'Indian',
+                      hintStyle: TextStyle(color: Colors.grey),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  GestureDetector(
+                    child: Center(
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: s.height * 0.04,
+                        width: s.width * 0.25,
+                        color: Color.fromRGBO(19, 84, 122, 0.7),
+                        child: Text(
+                          "SAVE",
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

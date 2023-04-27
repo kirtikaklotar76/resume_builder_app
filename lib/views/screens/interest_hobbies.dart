@@ -4,19 +4,19 @@ import 'package:resume_builder_app/modals/globalVar.dart';
 import '../../utils/theme_utils.dart';
 import '../components/Mybackicon.dart';
 
-class technicalskills extends StatefulWidget {
-  const technicalskills({Key? key}) : super(key: key);
+class interest_hobbies extends StatefulWidget {
+  const interest_hobbies({Key? key}) : super(key: key);
 
   @override
-  State<technicalskills> createState() => _technicalskillsState();
+  State<interest_hobbies> createState() => _interest_hobbiesState();
 }
 
-class _technicalskillsState extends State<technicalskills> {
+class _interest_hobbiesState extends State<interest_hobbies> {
   @override
   void dispose() {
     super.dispose();
 
-    global.mySkillsControllers.removeWhere((element) {
+    global.myHobbiesControllers.removeWhere((element) {
       if (element.text == "") {
         return true;
       } else {
@@ -24,17 +24,17 @@ class _technicalskillsState extends State<technicalskills> {
       }
     });
 
-    global.mySkillsControllers.forEach((element) {
-      global.mySkills.add("");
-      global.mySkills[global.mySkillsControllers.indexOf(element)] =
+    global.myHobbiesControllers.forEach((element) {
+      global.myHobbies.add("");
+      global.myHobbies[global.myHobbiesControllers.indexOf(element)] =
           element.text;
     });
 
-    global.mySkills.removeWhere((element) => element == "");
+    global.myHobbies.removeWhere((element) => element == "");
 
-    if (global.mySkillsControllers.isEmpty) {
+    if (global.myHobbiesControllers.isEmpty) {
       for (int i = 0; i < 2; i++) {
-        global.mySkillsControllers.add(TextEditingController());
+        global.myHobbiesControllers.add(TextEditingController());
       }
     }
   }
@@ -42,9 +42,9 @@ class _technicalskillsState extends State<technicalskills> {
   @override
   void initState() {
     super.initState();
-    if (global.mySkillsControllers.isEmpty) {
+    if (global.myHobbiesControllers.isEmpty) {
       for (int i = 0; i < 2; i++) {
-        global.mySkillsControllers.add(TextEditingController());
+        global.myHobbiesControllers.add(TextEditingController());
       }
     }
   }
@@ -57,7 +57,7 @@ class _technicalskillsState extends State<technicalskills> {
       appBar: AppBar(
         leading: Mybackicon(),
         title: Text(
-          "Technical Skills",
+          "Interest/Hobbies",
           style: appBarTitleStyle,
         ),
         toolbarHeight: 130,
@@ -84,7 +84,7 @@ class _technicalskillsState extends State<technicalskills> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  "Enter your skills",
+                  "Enter your Interest/Hobbies",
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -96,7 +96,7 @@ class _technicalskillsState extends State<technicalskills> {
                   height: 15,
                 ),
                 ...List.generate(
-                  global.mySkillsControllers.length,
+                  global.myHobbiesControllers.length,
                   (index) => MySkillTile(index: index),
                 ),
                 const SizedBox(
@@ -108,7 +108,7 @@ class _technicalskillsState extends State<technicalskills> {
                       child: ElevatedButton(
                         onPressed: () {
                           setState(() {
-                            global.mySkillsControllers
+                            global.myHobbiesControllers
                                 .add(TextEditingController());
                           });
                         },
@@ -131,9 +131,9 @@ class _technicalskillsState extends State<technicalskills> {
       children: [
         Expanded(
           child: TextField(
-            controller: global.mySkillsControllers[index],
+            controller: global.myHobbiesControllers[index],
             decoration: const InputDecoration(
-              hintText: "C Programming, Web",
+              hintText: "Reading book,etc..",
               hintStyle: TextStyle(color: Colors.grey),
             ),
           ),
@@ -141,7 +141,7 @@ class _technicalskillsState extends State<technicalskills> {
         IconButton(
           onPressed: () {
             setState(() {
-              global.mySkillsControllers.removeAt(index);
+              global.myHobbiesControllers.removeAt(index);
             });
           },
           icon: const Icon(

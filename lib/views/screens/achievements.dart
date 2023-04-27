@@ -1,7 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:resume_builder_app/modals/globalVar.dart';
 
-import '../../utils/routes_utils.dart';
 import '../../utils/theme_utils.dart';
 import '../components/Mybackicon.dart';
 
@@ -13,10 +12,47 @@ class achievements extends StatefulWidget {
 }
 
 class _achievementsState extends State<achievements> {
-  List<String> MyTextfild = [];
-  int index = 0;
+  @override
+  void dispose() {
+    super.dispose();
+
+    global.myachievmentsControllers.removeWhere((element) {
+      if (element.text == "") {
+        return true;
+      } else {
+        return false;
+      }
+    });
+
+    global.myachievmentsControllers.forEach((element) {
+      global.myachievments.add("");
+      global.myachievments[global.myachievmentsControllers.indexOf(element)] =
+          element.text;
+    });
+
+    global.myachievments.removeWhere((element) => element == "");
+
+    if (global.myachievmentsControllers.isEmpty) {
+      for (int i = 0; i < 2; i++) {
+        global.myachievmentsControllers.add(TextEditingController());
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if (global.myachievmentsControllers.isEmpty) {
+      for (int i = 0; i < 2; i++) {
+        global.myachievmentsControllers.add(TextEditingController());
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
     return Scaffold(
       appBar: AppBar(
         leading: Mybackicon(),
@@ -35,81 +71,84 @@ class _achievementsState extends State<achievements> {
         backgroundColor: Color(0xff13547A),
       ),
       body: Padding(
-        padding: EdgeInsets.all(18),
+        padding: const EdgeInsets.all(18),
         child: Container(
-          width: double.infinity,
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(24),
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15), color: Colors.white),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                "Enter your Achievements",
-                style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 1,
-                  color: Colors.grey,
+            borderRadius: BorderRadius.circular(15),
+            color: Colors.white,
+          ),
+          width: size.width,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  "Enter your Achievements",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1.5,
+                    color: Color.fromRGBO(19, 84, 122, 0.7),
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              ...MyTextfild.map(
-                (e) => IndexedStack(
-                  index: index,
+                const SizedBox(
+                  height: 15,
+                ),
+                ...List.generate(
+                  global.myachievmentsControllers.length,
+                  (index) => MySkillTile(index: index),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Row(
                   children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: TextField(
-                            keyboardType: TextInputType.text,
-                            decoration: InputDecoration(
-                              hintText: "Exceeded sales 17% average",
-                              hintStyle: TextStyle(
-                                color: Colors.grey,
-                              ),
-                            ),
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: () {
-                            setState(() {
-                              MyTextfild.removeAt(index);
-                            });
-                          },
-                          icon: Icon(Icons.delete),
-                        ),
-                      ],
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            global.myachievmentsControllers
+                                .add(TextEditingController());
+                          });
+                        },
+                        child: const Icon(Icons.add),
+                      ),
                     ),
                   ],
                 ),
-              ).toList(),
-              const SizedBox(
-                height: 15,
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: FloatingActionButton(
-                      onPressed: () {
-                        setState(() {
-                          MyTextfild.add("");
-                        });
-                      },
-                      child: Icon(
-                        CupertinoIcons.plus,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
-      backgroundColor: Colors.grey.shade300,
+      backgroundColor: Colors.grey.shade200,
+    );
+  }
+
+  Widget MySkillTile({required int index}) {
+    return Row(
+      children: [
+        Expanded(
+          child: TextField(
+            controller: global.myachievmentsControllers[index],
+            decoration: const InputDecoration(
+              hintText: "Exceeded sales 17% average",
+              hintStyle: TextStyle(color: Colors.grey),
+            ),
+          ),
+        ),
+        IconButton(
+          onPressed: () {
+            setState(() {
+              global.myachievmentsControllers.removeAt(index);
+            });
+          },
+          icon: const Icon(
+            Icons.delete,
+          ),
+        ),
+      ],
     );
   }
 }
