@@ -58,4 +58,7 @@ class global {
   static String? Refrences_institute;
 
   static bool isDeclared = false;
+  static String? Declaration_Description;
+  static String? Declaration_date;
+  static String? Declaration_place;
 }

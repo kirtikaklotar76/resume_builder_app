@@ -12,8 +12,10 @@ class declaration extends StatefulWidget {
 }
 
 class _declarationState extends State<declaration> {
+  GlobalKey<FormState> formkey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    Size s = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         leading: Mybackicon(),
@@ -70,11 +72,171 @@ class _declarationState extends State<declaration> {
                 ],
               ),
               (global.isDeclared)
-                  ? Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text("hiii"),
-                      ],
+                  ? SingleChildScrollView(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Form(
+                            key: formkey,
+                            child: Column(
+                              children: [
+                                Align(
+                                  alignment: Alignment(-1, 0),
+                                  child: Icon(
+                                    Icons.radar,
+                                    size: 50,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 25,
+                                ),
+                                TextFormField(
+                                  textInputAction: TextInputAction.next,
+                                  keyboardType: TextInputType.text,
+                                  initialValue: global.Declaration_Description,
+                                  validator: (val) {
+                                    if (val!.isEmpty) {
+                                      return "Please Enter The Description!!";
+                                    } else {
+                                      return null;
+                                    }
+                                  },
+                                  onSaved: (val) {
+                                    global.Declaration_Description = val;
+                                  },
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(5),
+                                      ),
+                                    ),
+                                    hintText: 'Description',
+                                    hintStyle: TextStyle(color: Colors.grey),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                const Divider(),
+                                const SizedBox(
+                                  height: 25,
+                                ),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Text(
+                                            "Date",
+                                            style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 40,
+                                          ),
+                                          SizedBox(
+                                            height: s.height * 0.05,
+                                            width: s.width * 0.35,
+                                            child: TextFormField(
+                                              textInputAction:
+                                                  TextInputAction.next,
+                                              keyboardType: TextInputType.text,
+                                              initialValue:
+                                                  global.Declaration_date,
+                                              validator: (val) {
+                                                if (val!.isEmpty) {
+                                                  return "Please Enter The Date!!";
+                                                } else {
+                                                  return null;
+                                                }
+                                              },
+                                              onSaved: (val) {
+                                                global.Declaration_date = val;
+                                              },
+                                              decoration: InputDecoration(
+                                                border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                    Radius.circular(5),
+                                                  ),
+                                                ),
+                                                hintText: 'DD/MM/YYYY',
+                                                hintStyle: TextStyle(
+                                                  color: Colors.grey,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Text(
+                                            "Place(Interview venue/city)",
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 20,
+                                          ),
+                                          SizedBox(
+                                            height: s.height * 0.05,
+                                            width: s.width * 0.30,
+                                            child: TextFormField(
+                                              keyboardType: TextInputType.text,
+                                              initialValue:
+                                                  global.Declaration_place,
+                                              validator: (val) {
+                                                if (val!.isEmpty) {
+                                                  return "Please Enter The Place!!";
+                                                } else {
+                                                  return null;
+                                                }
+                                              },
+                                              onSaved: (val) {
+                                                global.Declaration_place = val;
+                                              },
+                                              decoration: InputDecoration(
+                                                border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                    Radius.circular(5),
+                                                  ),
+                                                ),
+                                                hintText: 'Eg.Surat',
+                                                hintStyle: TextStyle(
+                                                  color: Colors.grey,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     )
                   : SizedBox(),
             ],
