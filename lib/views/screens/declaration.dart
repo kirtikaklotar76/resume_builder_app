@@ -3,6 +3,7 @@ import 'package:resume_builder_app/modals/globalVar.dart';
 
 import '../../utils/theme_utils.dart';
 import '../components/Mybackicon.dart';
+import '../components/my_snackbar.dart';
 
 class declaration extends StatefulWidget {
   const declaration({Key? key}) : super(key: key);
@@ -41,39 +42,39 @@ class _declarationState extends State<declaration> {
             borderRadius: BorderRadius.circular(30),
             color: Colors.white,
           ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Expanded(
-                    child: Text(
-                      "Declaration",
-                      style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 1,
-                        color: Color.fromRGBO(19, 84, 122, 0.7),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        "Declaration",
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 1,
+                          color: Color.fromRGBO(19, 84, 122, 0.7),
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(
-                    width: 40,
-                  ),
-                  Switch(
-                    value: global.isDeclared,
-                    onChanged: (val) {
-                      setState(() {
-                        global.isDeclared = val;
-                      });
-                    },
-                  ),
-                ],
-              ),
-              (global.isDeclared)
-                  ? SingleChildScrollView(
-                      child: Column(
+                    const SizedBox(
+                      width: 40,
+                    ),
+                    Switch(
+                      value: global.isDeclared,
+                      onChanged: (val) {
+                        setState(() {
+                          global.isDeclared = val;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+                (global.isDeclared)
+                    ? Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Form(
@@ -232,14 +233,61 @@ class _declarationState extends State<declaration> {
                                     ),
                                   ],
                                 ),
+                                const SizedBox(
+                                  height: 25,
+                                ),
+                                ElevatedButton(
+                                  style: ButtonStyle(
+                                    shape: MaterialStateProperty.all(
+                                      ContinuousRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.all(Radius.zero),
+                                      ),
+                                    ),
+                                    elevation: MaterialStatePropertyAll(0),
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      if (formkey.currentState!.validate()) {
+                                        formkey.currentState!.save();
+
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          mySnackBar(
+                                            text: "Successfully validated !!",
+                                            color: Colors.green,
+                                          ),
+                                        );
+                                      } else {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          mySnackBar(
+                                            text: "Failled to validate !!",
+                                            color: Colors.red,
+                                          ),
+                                        );
+                                      }
+                                    });
+                                  },
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    height: s.height * 0.04,
+                                    width: s.width * 0.25,
+                                    color: Color.fromRGBO(19, 84, 122, 0.7),
+                                    child: Text(
+                                      "SAVE",
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ),
+                                )
                               ],
                             ),
                           ),
                         ],
-                      ),
-                    )
-                  : SizedBox(),
-            ],
+                      )
+                    : SizedBox(),
+              ],
+            ),
           ),
         ),
       ),

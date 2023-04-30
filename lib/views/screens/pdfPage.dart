@@ -33,21 +33,24 @@ class _pdf_pageState extends State<pdf_page> {
                 child: pw.Container(
                   color: PdfColor.fromInt(0xff13547A),
                   child: pw.Padding(
-                    padding: pw.EdgeInsets.all(10),
+                    padding: pw.EdgeInsets.all(15),
                     child: pw.Column(
                       mainAxisAlignment: pw.MainAxisAlignment.start,
+                      crossAxisAlignment: pw.CrossAxisAlignment.start,
                       children: [
                         pw.SizedBox(
                           height: 15,
                         ),
-                        pw.Container(
-                          height: 125,
-                          width: 125,
-                          decoration: pw.BoxDecoration(
-                            shape: pw.BoxShape.circle,
-                            image: pw.DecorationImage(
-                              image: pw.MemoryImage(
-                                File(global.image!.path).readAsBytesSync(),
+                        pw.Center(
+                          child: pw.Container(
+                            height: 125,
+                            width: 125,
+                            decoration: pw.BoxDecoration(
+                              shape: pw.BoxShape.circle,
+                              image: pw.DecorationImage(
+                                image: pw.MemoryImage(
+                                  File(global.image!.path).readAsBytesSync(),
+                                ),
                               ),
                             ),
                           ),
@@ -55,33 +58,46 @@ class _pdf_pageState extends State<pdf_page> {
                         pw.SizedBox(
                           height: 25,
                         ),
-                        pw.Row(
-                          children: [
-                            pw.SizedBox(
-                              height: 10,
-                            ),
-                            pw.Expanded(
-                              child: pw.Text(
-                                "Name:",
-                                style: pw.TextStyle(
-                                  fontSize: 18,
-                                  color: PdfColors.white,
-                                  fontWeight: pw.FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                            pw.Expanded(
-                              flex: 2,
-                              child: pw.Text(
-                                global.name!,
-                                style: pw.TextStyle(
-                                  fontSize: 16,
-                                  color: PdfColors.white,
-                                  fontWeight: pw.FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ],
+                        pw.Text(
+                          "Date of Birth ",
+                          style: pw.TextStyle(
+                            color: PdfColors.white,
+                            fontSize: 14,
+                            fontWeight: pw.FontWeight.bold,
+                          ),
+                        ),
+                        pw.SizedBox(
+                          height: 5,
+                        ),
+                        pw.Text(
+                          global.dob!,
+                          style: pw.TextStyle(
+                            color: PdfColors.white,
+                            fontSize: 12,
+                            fontWeight: pw.FontWeight.bold,
+                          ),
+                        ),
+                        pw.SizedBox(
+                          height: 25,
+                        ),
+                        pw.Text(
+                          "Marital Status ",
+                          style: pw.TextStyle(
+                            color: PdfColors.white,
+                            fontSize: 14,
+                            fontWeight: pw.FontWeight.bold,
+                          ),
+                        ),
+                        pw.SizedBox(
+                          height: 5,
+                        ),
+                        pw.Text(
+                          global.maritalStatus!,
+                          style: pw.TextStyle(
+                            color: PdfColors.white,
+                            fontSize: 12,
+                            fontWeight: pw.FontWeight.bold,
+                          ),
                         ),
                       ],
                     ),
@@ -90,7 +106,100 @@ class _pdf_pageState extends State<pdf_page> {
               ),
               pw.Expanded(
                 flex: 2,
-                child: pw.Container(),
+                child: pw.Padding(
+                  padding: pw.EdgeInsets.all(16),
+                  child: pw.Container(
+                    child: pw.Column(
+                      mainAxisAlignment: pw.MainAxisAlignment.start,
+                      crossAxisAlignment: pw.CrossAxisAlignment.start,
+                      children: [
+                        pw.SizedBox(
+                          height: 5,
+                        ),
+                        pw.Text(
+                          global.name!,
+                          style: pw.TextStyle(
+                            fontSize: 22,
+                            fontWeight: pw.FontWeight.bold,
+                          ),
+                        ),
+                        pw.SizedBox(
+                          height: 5,
+                        ),
+                        pw.Row(
+                          children: [
+                            pw.Text(
+                              "Email :",
+                              style: pw.TextStyle(
+                                fontSize: 14,
+                                fontWeight: pw.FontWeight.bold,
+                              ),
+                            ),
+                            pw.SizedBox(
+                              width: 5,
+                            ),
+                            pw.Text(
+                              global.email!,
+                              style: pw.TextStyle(
+                                fontSize: 12,
+                                fontWeight: pw.FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                        pw.SizedBox(
+                          height: 5,
+                        ),
+                        pw.Row(
+                          children: [
+                            pw.Text(
+                              "Contact No :",
+                              style: pw.TextStyle(
+                                fontSize: 14,
+                                fontWeight: pw.FontWeight.bold,
+                              ),
+                            ),
+                            pw.SizedBox(
+                              width: 5,
+                            ),
+                            pw.Text(
+                              global.contactNo!.toString(),
+                              style: pw.TextStyle(
+                                fontSize: 12,
+                                fontWeight: pw.FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                        pw.SizedBox(
+                          height: 5,
+                        ),
+                        pw.Row(
+                          children: [
+                            pw.Text(
+                              "Address :",
+                              style: pw.TextStyle(
+                                fontSize: 14,
+                                fontWeight: pw.FontWeight.bold,
+                              ),
+                            ),
+                            pw.SizedBox(
+                              width: 5,
+                            ),
+                            pw.Text(
+                              "${global.a1},${global.a2},\n${global.a3}",
+                              style: pw.TextStyle(
+                                fontSize: 12,
+                                fontWeight: pw.FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                        pw.Divider(color: PdfColors.grey),
+                      ],
+                    ),
+                  ),
+                ),
               ),
             ],
           ),

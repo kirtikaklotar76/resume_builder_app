@@ -237,25 +237,6 @@ class _personal_detailsState extends State<personal_details> {
                     onSaved: (val) {
                       global.nationality = val;
                     },
-                    onFieldSubmitted: (val) {
-                      if (formkey.currentState!.validate()) {
-                        formkey.currentState!.save();
-
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          mySnackBar(
-                            text: "Successfully validated !!",
-                            color: Colors.green,
-                          ),
-                        );
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          mySnackBar(
-                            text: "Failed to validate !!",
-                            color: Colors.red,
-                          ),
-                        );
-                      }
-                    },
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(
@@ -269,8 +250,37 @@ class _personal_detailsState extends State<personal_details> {
                   const SizedBox(
                     height: 30,
                   ),
-                  GestureDetector(
-                    child: Center(
+                  Center(
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        shape: MaterialStateProperty.all(
+                          ContinuousRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.zero),
+                          ),
+                        ),
+                        elevation: MaterialStatePropertyAll(0),
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          if (formkey.currentState!.validate()) {
+                            formkey.currentState!.save();
+
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              mySnackBar(
+                                text: "Successfully validated !!",
+                                color: Colors.green,
+                              ),
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              mySnackBar(
+                                text: "Failled to validate !!",
+                                color: Colors.red,
+                              ),
+                            );
+                          }
+                        });
+                      },
                       child: Container(
                         alignment: Alignment.center,
                         height: s.height * 0.04,
@@ -282,7 +292,7 @@ class _personal_detailsState extends State<personal_details> {
                         ),
                       ),
                     ),
-                  ),
+                  )
                 ],
               ),
             ),
